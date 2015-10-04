@@ -20,9 +20,9 @@ public class Application implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
 
-
+		
 		// save a couple of customers
-		repository.save(new Person("Alice","Smith"));
+		repository.save(new Person("Nick","Mattei"));
 
 		// fetch all customers
 		System.out.println("Customers found with findAll():");
@@ -36,10 +36,10 @@ public class Application implements CommandLineRunner {
 		System.out.println("Customer found with findByFirstName('Alice'):");
 		System.out.println("--------------------------------");
 		System.out.println(repository.findByFirstName("Alice"));
-		System.out.println("--------------------------------");
+		System.out.println("-----------HI---------------------");
 		System.out.println(repository.findAll());
 		System.out.println("--------------------------------");
-
+		System.out.println(repository.findById("56118a7fd4c6ea4c1821555c"));
 
 
 	
