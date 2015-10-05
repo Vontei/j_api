@@ -22,7 +22,7 @@ public class Application implements CommandLineRunner {
 
 		
 		// save a couple of customers
-		repository.save(new Person("Nick","Mattei"));
+		repository.save(new Person("Nevil","Longbottom"));
 
 		// fetch all customers
 		System.out.println("Customers found with findAll():");
@@ -35,12 +35,12 @@ public class Application implements CommandLineRunner {
 		// fetch an individual customer
 		System.out.println("Customer found with findByFirstName('Alice'):");
 		System.out.println("--------------------------------");
-		System.out.println(repository.findByFirstName("Alice"));
-		System.out.println("-----------HI---------------------");
-		System.out.println(repository.findAll());
-		System.out.println("--------------------------------");
-		System.out.println(repository.findById("56118a7fd4c6ea4c1821555c"));
-
+//		System.out.println(repository.findByFirstName("Alice"));
+//		System.out.println("-----------HI---------------------");
+//		System.out.println(repository.findAll());
+//		System.out.println("--------------------------------");
+//		System.out.println(repository.findById("56118a7fd4c6ea4c1821555c"));
+//
 
 	
 
