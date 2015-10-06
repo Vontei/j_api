@@ -27,7 +27,10 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile("junit:junit")
+    compile group: 'com.yahoofinance-api', name: 'YahooFinanceAPI', version: 'x.y.z'
+    
 }
+
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
