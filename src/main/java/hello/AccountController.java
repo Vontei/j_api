@@ -1,24 +1,36 @@
 package hello;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.lang.reflect.Array;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
 
 @RestController
+@EnableMongoRepositories
 public class AccountController {
+	@Autowired
+	public PersonRepository repository;
 
-	
-	//create account add to //sign up post
-	//post to account
     @RequestMapping("/account")
     public String accountName(){
-    	return "BRAND NEW ACCOUNT";
+    	repository.save(new Person("WORK PLEASE","Longbottom"));
+
+    	return "BRAND NEW NEW ACCOUNT";
     }
     
-    //add members to account
-    //post to addMember
-    //updates member
     
+    @RequestMapping("/account/people")   
+    public List<String> accountPeople(){
+		List<String> x = new ArrayList<String>();
+    	for (Person person : repository.findAll()) {
+    		x.add(person.toString());
+		}
+		return x;
+    }
     
     
 }
