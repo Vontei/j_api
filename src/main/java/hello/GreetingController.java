@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class GreetingController {
+	public PersonRepository repository;
 
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
@@ -19,6 +20,12 @@ public class GreetingController {
     
     @RequestMapping("/hello")
     public String hello(){
+		repository.save(new Person("NICKY","BADADUCCI"));
+		for (Person person : repository.findAll()) {
+			System.out.println(person);
+		}
     	return "HELLO THERE";
     }
+    
+    
 }
