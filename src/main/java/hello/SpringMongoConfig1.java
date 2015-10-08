@@ -1,5 +1,5 @@
-//package hello;
-//
+package hello;
+
 //
 //import org.springframework.context.ApplicationContext;
 //import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -32,3 +32,27 @@
 //    MongoOperations mongoOperation = (MongoOperations)ctx.getBean("mongoTemplate");
 //
 //}
+
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import com.mongodb.MongoClient;
+
+/**
+ * Spring MongoDB configuration file
+ * 
+ */
+@Configuration
+public class SpringMongoConfig1{
+
+	public @Bean
+	MongoTemplate mongoTemplate() throws Exception {
+		
+		MongoTemplate mongoTemplate = 
+			new MongoTemplate(new MongoClient("localhost"),"grockr");
+		return mongoTemplate;
+		
+	}
+		
+}

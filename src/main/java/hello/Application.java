@@ -20,7 +20,7 @@ public class Application implements CommandLineRunner {
 	}
 	
 	public void run(String... args) throws Exception {
-		
+		repository.save(new Person("NICK", "NEANDERTEI"));
 		// fetch all customers
 		System.out.println("Customers found with findAll():");
 		System.out.println("-------------------------------");

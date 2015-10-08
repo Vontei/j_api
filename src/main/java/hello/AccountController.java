@@ -1,15 +1,9 @@
 package hello;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.mongodb.MongoClient;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
@@ -25,26 +18,14 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-//
-//import com.mongodb.BasicDBObject;
-//import com.mongodb.BulkWriteOperation;
-//import com.mongodb.BulkWriteResult;
-//import com.mongodb.Cursor;
-//import com.mongodb.DB;
-//import com.mongodb.DBCollection;
-//import com.mongodb.DBCursor;
-//import com.mongodb.DBObject;
-//import com.mongodb.MongoClient;
 
 
 @RestController
 @EnableMongoRepositories
 public class AccountController {
+	
 	@Autowired
 	public PersonRepository repository;
-
-//	MongoClient mongoClient = new MongoClient( "localhost/grockr" );
-
 
 
     @RequestMapping("/account/{id1}/{id2}")
@@ -54,7 +35,7 @@ public class AccountController {
     	Stock stock = YahooFinance.get("GOOG");
     	BigDecimal price = stock.getQuote(true).getPrice();
     	System.out.println("The current price of GOOGLE is:" +price);
-    	repository.save(new Person("WORK PLEASE","Longbottom"));
+//    	repository.save(new Person("WORK PLEASE","Longbottom"));
     	String[] results = {price.toString(), Integer.toString(sum)}; 
     	return results;
     }
@@ -62,7 +43,9 @@ public class AccountController {
     
 	@RequestMapping(value="/account/trial" , method=RequestMethod.POST)
     public String[] doStuff(HttpServletRequest request, HttpServletResponse response) throws IOException{
-			  StringBuffer jb = new StringBuffer();
+		     repository.deleteAll();
+
+			 StringBuffer jb = new StringBuffer();
 			  String line = null;
 			  try {
 			    BufferedReader reader = request.getReader();
@@ -78,7 +61,9 @@ public class AccountController {
 			 String lastName = "LASTNAME";
 			 System.out.println(obj.getString("name"));
 			 repository.save(new Person(firstName, lastName));
-
+			 for (Person person : repository.findAll()) {
+					System.out.println(person);
+				}
     	return json;
       }
     	

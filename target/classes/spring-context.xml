@@ -8,14 +8,14 @@
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	
-	<mongo:mongo id="mongo">
-		<mongo:options auto-connect-retry="true"/>
-	</mongo:mongo>
+	<mongo:mongo id="mongo" host="localhost" port="27017"/>
+	<mongo:options auto-connect-retry="true"/>
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
 		<constructor-arg value="grockr"/>
 	</bean>
 	
+	 <mongo:repositories base-package="hello" mongo-template-ref="mongoTemplate"/>
 	
 
 </beans>  
