@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mongodb.MongoClient;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
@@ -58,7 +61,7 @@ public class AccountController {
     
     
 	@RequestMapping(value="/account/trial" , method=RequestMethod.POST)
-    public String doStuff(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public String[] doStuff(HttpServletRequest request, HttpServletResponse response) throws IOException{
 			  StringBuffer jb = new StringBuffer();
 			  String line = null;
 			  try {
@@ -66,10 +69,17 @@ public class AccountController {
 			    while ((line = reader.readLine()) != null)
 			      jb.append(line);
 			  } catch (Exception e) { /*report an error*/ }
-
+			 String[] json= {jb.toString()};
 			 System.out.println(jb);
-			 System.out.println(jb.toString());
-    	return null;
+			 String thing = jb.toString();
+			 response.setContentType("application/json");
+			 JSONObject obj = new JSONObject(thing);
+			 String firstName = obj.getString("name");
+			 String lastName = "LASTNAME";
+			 System.out.println(obj.getString("name"));
+			 repository.save(new Person(firstName, lastName));
+
+    	return json;
       }
     	
     

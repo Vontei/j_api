@@ -20,22 +20,14 @@ public class Application implements CommandLineRunner {
 	}
 	
 	public void run(String... args) throws Exception {
-
-		// save a couple of customers
-		repository.save(new Person("Nevil","Longbottom"));
-
+		
 		// fetch all customers
 		System.out.println("Customers found with findAll():");
 		System.out.println("-------------------------------");
 		for (Person person : repository.findAll()) {
 			System.out.println(person);
 		}
-		System.out.println();
 
-		// fetch an individual customer
-		System.out.println("Customer found with findByFirstName('Alice'):");
-
-	
 
 	}
 
