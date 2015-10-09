@@ -15,12 +15,14 @@ public class Application implements CommandLineRunner {
 	@Autowired
 	public PersonRepository repository;
 
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 	
+	
 	public void run(String... args) throws Exception {
-		repository.save(new Person("NICK", "NEANDERTEI"));
+//		repository.save(new Person("NICK", "NEANDERTEI"));
 		// fetch all customers
 		System.out.println("Customers found with findAll():");
 		System.out.println("-------------------------------");

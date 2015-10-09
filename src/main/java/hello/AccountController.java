@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
-
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -35,7 +33,6 @@ public class AccountController {
     	Stock stock = YahooFinance.get("GOOG");
     	BigDecimal price = stock.getQuote(true).getPrice();
     	System.out.println("The current price of GOOGLE is:" +price);
-//    	repository.save(new Person("WORK PLEASE","Longbottom"));
     	String[] results = {price.toString(), Integer.toString(sum)}; 
     	return results;
     }
@@ -43,7 +40,7 @@ public class AccountController {
     
 	@RequestMapping(value="/account/trial" , method=RequestMethod.POST)
     public String[] doStuff(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		     repository.deleteAll();
+//		     repository.deleteAll();
 
 			 StringBuffer jb = new StringBuffer();
 			  String line = null;
@@ -68,7 +65,8 @@ public class AccountController {
       }
     	
     
-  
+	
+
     
     @RequestMapping("/account/people")   
     public List<String> accountPeople(){
