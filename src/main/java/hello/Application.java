@@ -1,10 +1,16 @@
 package hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
+import hello.Models.Account;
+import hello.Models.Member;
+import hello.Repositories.AccountRepository;
+import hello.Repositories.MemberRepository;
 
 
 @SpringBootApplication
@@ -13,7 +19,8 @@ public class Application implements CommandLineRunner {
 
 	
 	@Autowired
-	public PersonRepository repository;
+//	public MemberRepository repository;
+	public AccountRepository repo;
 
 	
 	public static void main(String[] args) {
@@ -22,13 +29,14 @@ public class Application implements CommandLineRunner {
 	
 	
 	public void run(String... args) throws Exception {
-//		repository.save(new Person("NICK", "NEANDERTEI"));
-		// fetch all customers
-		System.out.println("Customers found with findAll():");
+////		repository.save(new Member("NICKYDIAMONDs", 45));
+//		repo.save(new Account("JavaFamily", "passwords"));
+//		// fetch all customers
+		System.out.println("Spring Booted");
 		System.out.println("-------------------------------");
-		for (Person person : repository.findAll()) {
-			System.out.println(person);
-		}
+//		for (Member person : repository.findAll()) {
+//			System.out.println(person);
+//		}
 
 
 	}

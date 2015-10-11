@@ -1,4 +1,4 @@
-package hello;
+package hello.Controllers;
 
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -6,10 +6,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import hello.Models.Greeting;
+import hello.Models.Member;
+import hello.Repositories.MemberRepository;
+
 
 @RestController
 public class GreetingController {
-	public PersonRepository repository;
+	public MemberRepository repository;
 
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
@@ -24,19 +28,18 @@ public class GreetingController {
     
     @RequestMapping("/hello")
     public String hello(){
-		repository.save(new Person("NICKY","BADADUCCI"));
-		for (Person person : repository.findAll()) {
-			System.out.println(person);
+//		repository.save(new Member("NICKY","BADADUCCI"));
+		for (Member member : repository.findAll()) {
+			System.out.println(member);
 		}
     	return "HELLO THERE";
     }
     
     
-//    @RequestMapping(value="/login" , method=RequestMethod.POST)
-//    public login(){
-//    	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
-//
-//    }	
+    @RequestMapping(value="/login" , method=RequestMethod.POST)
+    public void BCrypt(){
+    	
+    }
     		
     
 }

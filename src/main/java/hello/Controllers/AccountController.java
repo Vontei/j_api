@@ -1,5 +1,6 @@
-package hello;
+package hello.Controllers;
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -10,9 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import hello.Models.Account;
+import hello.Models.Member;
+import hello.Repositories.*;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import org.json.JSONObject;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
@@ -23,8 +29,42 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class AccountController {
 	
 	@Autowired
-	public PersonRepository repository;
+	public AccountRepository accountRepo;
+	@Autowired
+	public MemberRepository memberRepo;
+	@Autowired
+	public OrderRepository orderRepo;
+	
+	
+	@RequestMapping(value="/account/new" ,method=RequestMethod.POST)
+	public List<Account> createAccount(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		 StringBuffer jb = new StringBuffer();
+		  String line = null;
+		  try {
+		    BufferedReader reader = request.getReader();
+		    while ((line = reader.readLine()) != null)
+		      jb.append(line);
+		  } catch (Exception e) { /*report an error*/ }
+		 System.out.println(jb);
+		 String thing = jb.toString();
+		 JSONObject obj = new JSONObject(thing);
+		 String userName = obj.getString("userName");
+		 String password = obj.getString("password");
+		 String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+		 System.out.println(hashed);
+		 System.out.println(String.class.isInstance(hashed));
 
+		 accountRepo.save(new Account(userName, hashed));
+		 if (BCrypt.checkpw(password, hashed))
+				System.out.println("It matches");
+			else
+				System.out.println("It does not match");
+		 List<Account> returnInfo = accountRepo.findByUserName(userName);
+		 System.out.println(returnInfo);
+
+		return returnInfo;
+	}
+	
 
     @RequestMapping("/account/{id1}/{id2}")
     public String[] accountName(@PathVariable("id1") int id, @PathVariable("id2") int id1) throws IOException{
@@ -50,15 +90,16 @@ public class AccountController {
 			      jb.append(line);
 			  } catch (Exception e) { /*report an error*/ }
 			 String[] json= {jb.toString()};
+			 System.out.println(json);
 			 System.out.println(jb);
 			 String thing = jb.toString();
 			 response.setContentType("application/json");
 			 JSONObject obj = new JSONObject(thing);
-			 String firstName = obj.getString("name");
-			 String lastName = "LASTNAME";
+//			 String firstName = obj.getString("name");
+//			 String lastName = "LASTNAME";
 			 System.out.println(obj.getString("name"));
-			 repository.save(new Person(firstName, lastName));
-			 for (Person person : repository.findAll()) {
+//			 repository.save(new Member(firstName, lastName));
+			 for (Member person : memberRepo.findAll()) {
 					System.out.println(person);
 				}
     	return json;
@@ -71,7 +112,7 @@ public class AccountController {
     @RequestMapping("/account/people")   
     public List<String> accountPeople(){
 		List<String> x = new ArrayList<String>();	
-    	for (Person person : repository.findAll()) {
+    	for (Member person : memberRepo.findAll()) {
     		x.add(person.toString());
 		}
 		return x;
