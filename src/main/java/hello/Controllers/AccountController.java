@@ -51,8 +51,6 @@ public class AccountController {
 		 String userName = obj.getString("userName");
 		 String password = obj.getString("password");
 		 String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
-		 System.out.println(hashed);
-		 System.out.println(String.class.isInstance(hashed));
 
 		 accountRepo.save(new Account(userName, hashed));
 		 if (BCrypt.checkpw(password, hashed))

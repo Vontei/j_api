@@ -1,6 +1,7 @@
 package hello.Controllers;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpResponse;
+import org.apache.tomcat.util.net.URL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.validation.ObjectError;
@@ -35,7 +37,9 @@ import hello.Models.Greeting;
 import hello.Models.Member;
 import hello.Repositories.MemberRepository;
 
-
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @RestController
 public class GreetingController {
@@ -63,12 +67,21 @@ public class GreetingController {
     }
     
     
-    @RequestMapping(value="/login" , method=RequestMethod.POST)
-    public GetRequest all() throws UnirestException{
-    	GetRequest request = Unirest.get("http://www.omdbapi.com/?s=disney");
-     	System.out.println(request);
-     	
-		return request;
+    @RequestMapping(value="/alchemy" , method=RequestMethod.GET)
+    @JsonProperty
+    public String all() throws UnirestException, URISyntaxException, MalformedURLException{
+
+        String myUrl = "https://access.alchemyapi.com/calls/data/GetNews?apikey=YOUR API KEY&return=enriched.url.title&start=1444003200&end=1444690800&q.enriched.url.enrichedTitle.entities.entity=|text=IBM,type=company|&q.enriched.url.enrichedTitle.docSentiment.type=positive&q.enriched.url.enrichedTitle.taxonomy.taxonomy_.label=technology%20and%20computing&count=25&outputMode=json";
+        URL url = new URL(myUrl);
+        String nullFragment = null;
+        URI uri = new URI(url.getProtocol(), url.getHost(), url.getPath(), url.getQuery(), nullFragment);
+        String newURI = uri.toString();
+    	com.mashape.unirest.http.HttpResponse<JsonNode> request = Unirest.get(newURI).asJson();
+     	System.out.println(request.toString());
+     	System.out.println(request.getBody());
+     	JSONObject obj = new JSONObject(request);
+     	System.out.println(obj);
+		return obj.toString();
     }
     
     
@@ -79,10 +92,9 @@ public class GreetingController {
     public String alchemyCall() throws UnirestException{
     	com.mashape.unirest.http.HttpResponse<JsonNode> req = Unirest.get("http://www.omdbapi.com/?s=disney").asJson();
      	Object answer = req.getBody();
-     	System.out.println(answer);
      	String other = answer.toString();
 		JSONObject obj = new JSONObject(other);
-		 System.out.println(obj);
+		System.out.println(obj);
 		return other;
 
     }
