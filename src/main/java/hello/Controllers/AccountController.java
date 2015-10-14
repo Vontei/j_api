@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonDeserializer;
+
 import hello.Models.Account;
 import hello.Models.Member;
 import hello.Repositories.*;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +65,33 @@ public class AccountController {
 		 System.out.println(returnInfo);
 
 		return returnInfo;
+	}
+	
+	
+	
+	@RequestMapping(value="account/login", method=RequestMethod.POST)
+		public List<Account> login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+			StringBuffer jb = new StringBuffer();
+			  String line = null;
+			  try {
+			    BufferedReader reader = request.getReader();
+			    while ((line = reader.readLine()) != null)
+			      jb.append(line);
+			  } catch (Exception e) { /*report an error*/ }
+			 String thing = jb.toString();
+			 JSONObject obj = new JSONObject(thing);
+			 String userName = obj.getString("userName");
+			 String password = obj.getString("password");
+			 List<Account> cookie = (List<Account>) accountRepo.findByUserName(userName);
+			 String pw = cookie.get(0).password;
+//			 for (Account account : cookie) {
+//					System.out.println(account.password);
+//				}
+			 if (BCrypt.checkpw(password, pw))
+//				 	System.out.println("Passwords Match");
+			 		return cookie;		
+			 	else
+			 		return null;
 	}
 	
 

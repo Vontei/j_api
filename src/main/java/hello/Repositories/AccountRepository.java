@@ -13,6 +13,6 @@ public interface AccountRepository extends MongoRepository<Account, String> {
 
 	List<Account> findByUserName(@Param("username") String userName);
 //	List<Account> findById(@Param("id") String id);
-	List<Account> findById(@Param("_id")String[] json);
+	List<Account> findById(@Param("_id")Account id);
 
 }

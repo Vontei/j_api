@@ -25,8 +25,8 @@ public class Account {
 	 @Override
 	  public String toString() {
 	     return String.format(
-//	           "Account[id='%s', userName='%s', accountId='%4.3f', balance='%d%n' ]",
-	           id, userName, membersId);
+	           "Account[id='%s', userName='%s', password='%s']",
+	           id, userName, password, membersId);
 	 }
 
 }

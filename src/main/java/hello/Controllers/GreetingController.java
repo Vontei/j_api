@@ -36,6 +36,8 @@ import com.mongodb.util.JSON;
 import hello.Models.Greeting;
 import hello.Models.Member;
 import hello.Repositories.MemberRepository;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -89,12 +91,16 @@ public class GreetingController {
     
     @RequestMapping(value="/API", method=RequestMethod.GET)
     @JsonProperty   
-    public String alchemyCall() throws UnirestException{
+    public String alchemyCall() throws UnirestException, IOException{
     	com.mashape.unirest.http.HttpResponse<JsonNode> req = Unirest.get("http://www.omdbapi.com/?s=disney").asJson();
      	Object answer = req.getBody();
      	String other = answer.toString();
 		JSONObject obj = new JSONObject(other);
 		System.out.println(obj);
+		
+		
+		Stock tesla = YahooFinance.get("TSLA", true);
+		System.out.println(tesla.getHistory());
 		return other;
 
     }

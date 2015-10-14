@@ -29,9 +29,6 @@ public class Application implements CommandLineRunner {
 	
 	
 	public void run(String... args) throws Exception {
-////		repository.save(new Member("NICKYDIAMONDs", 45));
-//		repo.save(new Account("JavaFamily", "passwords"));
-//		// fetch all customers
 		System.out.println("Spring Booted");
 		System.out.println("-------------------------------");
 //		for (Member person : repository.findAll()) {
