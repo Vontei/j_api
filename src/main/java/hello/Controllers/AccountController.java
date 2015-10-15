@@ -84,9 +84,6 @@ public class AccountController {
 			 String password = obj.getString("password");
 			 List<Account> cookie = (List<Account>) accountRepo.findByUserName(userName);
 			 String pw = cookie.get(0).password;
-//			 for (Account account : cookie) {
-//					System.out.println(account.password);
-//				}
 			 if (BCrypt.checkpw(password, pw))
 //				 	System.out.println("Passwords Match");
 			 		return cookie;		
@@ -109,7 +106,6 @@ public class AccountController {
     
 	@RequestMapping(value="/account/trial" , method=RequestMethod.POST)
     public String[] doStuff(HttpServletRequest request, HttpServletResponse response) throws IOException{
-//		     repository.deleteAll();
 
 			 StringBuffer jb = new StringBuffer();
 			  String line = null;
@@ -125,7 +121,6 @@ public class AccountController {
 			 response.setContentType("application/json");
 			 JSONObject obj = new JSONObject(thing);
 //			 String firstName = obj.getString("name");
-//			 String lastName = "LASTNAME";
 			 System.out.println(obj.getString("name"));
 //			 repository.save(new Member(firstName, lastName));
 			 for (Member person : memberRepo.findAll()) {
