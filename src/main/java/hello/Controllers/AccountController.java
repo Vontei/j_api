@@ -57,10 +57,10 @@ public class AccountController {
 		 String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
 
 		 accountRepo.save(new Account(userName, hashed));
-		 if (BCrypt.checkpw(password, hashed))
-				System.out.println("It matches");
-			else
-				System.out.println("It does not match");
+//		 if (BCrypt.checkpw(password, hashed))
+//				System.out.println("It matches");
+//			else
+//				System.out.println("It does not match");
 		 List<Account> returnInfo = accountRepo.findByUserName(userName);
 		 System.out.println(returnInfo);
 
@@ -69,6 +69,7 @@ public class AccountController {
 	
 	
 	
+		
 	@RequestMapping(value="account/login", method=RequestMethod.POST)
 		public List<Account> login(HttpServletRequest request, HttpServletResponse response) throws IOException {
 			StringBuffer jb = new StringBuffer();
@@ -83,13 +84,25 @@ public class AccountController {
 			 String userName = obj.getString("userName");
 			 String password = obj.getString("password");
 			 List<Account> cookie = (List<Account>) accountRepo.findByUserName(userName);
+			 List<Account> rejection = null;
 			 String pw = cookie.get(0).password;
 			 if (BCrypt.checkpw(password, pw))
-//				 	System.out.println("Passwords Match");
 			 		return cookie;		
 			 	else
-			 		return null;
+			 		return rejection;
 	}
+	
+	
+	
+	
+	@RequestMapping("/balance/{id}")
+	public float getBalance(@PathVariable("id") String id) throws IOException{
+		Account account = accountRepo.findOne(id);
+		return account.balance;
+		
+	}
+	
+	
 	
 
     @RequestMapping("/account/{id1}/{id2}")

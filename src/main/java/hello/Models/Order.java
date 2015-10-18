@@ -7,22 +7,20 @@ public class Order {
 
 	@Id public String id;
 	
-	public int memberId;
+	public String memberId;
 	public String stock;
-	public int buyPrice;
-	public int sellPrice;
-	public int qty;
-	public int profitLoss;
+	public String buyPrice;
+	public String sellPrice;
+	public String qty;
 	
 	public Order(){};
 	
-	public Order(int memberId, String stock,int buyPrice, int sellPrice, int qty,int profitLoss){
+	public Order(String memberId, String stock,String buyPrice,String qty ,String sellPrice){
 		this.memberId = memberId;
 		this.stock = stock;
 		this.buyPrice = buyPrice;
-		this.sellPrice = sellPrice;
 		this.qty = qty;
-		this.profitLoss = profitLoss;
+		this.sellPrice = sellPrice;
 	}
 	
 }

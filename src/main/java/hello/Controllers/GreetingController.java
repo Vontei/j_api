@@ -2,6 +2,7 @@ package hello.Controllers;
 
 import java.io.BufferedReader;
 
+
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -43,6 +44,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+
+
 @RestController
 public class GreetingController {
 	public MemberRepository repository;
@@ -61,7 +64,6 @@ public class GreetingController {
     
     @RequestMapping("/hello")
     public String hello(){
-//		repository.save(new Member("NICKY","BADADUCCI"));
 		for (Member member : repository.findAll()) {
 			System.out.println(member);
 		}
@@ -73,7 +75,7 @@ public class GreetingController {
     @JsonProperty
     public String all() throws UnirestException, URISyntaxException, MalformedURLException{
 
-        String myUrl = "https://access.alchemyapi.com/calls/data/GetNews?apikey=9ed9b208b5abcefa432a59dcfce56fd83ed3f5e7&return=enriched.url.title&start=1444003200&end=1444690800&q.enriched.url.enrichedTitle.entities.entity=|text=IBM,type=company|&q.enriched.url.enrichedTitle.docSentiment.type=positive&q.enriched.url.enrichedTitle.taxonomy.taxonomy_.label=technology%20and%20computing&count=25&outputMode=json";
+        String myUrl = "https://access.alchemyapi.com/calls/data/GetNews?apikey=9ed9b208b5abcefa432a59dcfce56fd83ed3f5e7&return=enriched.url.title,enriched.url.docSentiment&start=1444262400&end=1444950000&q.enriched.url.entities.entity=|text=IBM,type=company|&q.enriched.url.taxonomy.taxonomy_.label=technology%20and%20computing&count=25&outputMode=json";
         URL url = new URL(myUrl);
         String nullFragment = null;
         URI uri = new URI(url.getProtocol(), url.getHost(), url.getPath(), url.getQuery(), nullFragment);

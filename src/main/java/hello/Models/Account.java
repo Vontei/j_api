@@ -11,6 +11,7 @@ public class Account {
 	
 	public String userName;
 	public String password;
+	public float balance;
 	public ArrayList<Integer> membersId;
 	
 	public Account(){}
@@ -18,15 +19,21 @@ public class Account {
 	public Account(String userName, String password){
 		this.userName = userName;
 		this.password = password;
+		this.balance = (float) 100000.00;
 		this.membersId = new ArrayList<Integer>();
 	}
 	
+	
+	
+	public void setBalance(float newBalance){
+		this.balance = newBalance;
+	}
 	
 	 @Override
 	  public String toString() {
 	     return String.format(
 	           "Account[id='%s', userName='%s', password='%s']",
-	           id, userName, password, membersId);
+	           id, userName, password,balance, membersId);
 	 }
 
 }

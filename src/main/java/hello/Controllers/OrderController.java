@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import hello.Models.Account;
 import hello.Models.Member;
+import hello.Models.Order;
 import hello.Repositories.AccountRepository;
 import hello.Repositories.MemberRepository;
 import hello.Repositories.OrderRepository;
@@ -30,7 +32,9 @@ public class OrderController {
 		
 		@Autowired
 		public MemberRepository memberRepo;
+		@Autowired
 		public OrderRepository orderRepo;
+		@Autowired
 		public AccountRepository accountRepo;
 
 	    @RequestMapping(value="/yahoo")
@@ -51,32 +55,79 @@ public class OrderController {
 	    
 	    
 	    
-//	    @RequestMapping(value="/account/trial" , method=RequestMethod.POST)
-//	    public String[] doStuff(HttpServletRequest request, HttpServletResponse response) throws IOException{
-////			     repository.deleteAll();
+	    @RequestMapping(value="/buy", method=RequestMethod.POST)
+	    public void buyStock(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	    	 StringBuffer jb = new StringBuffer();
+			  String line = null;
+			  try {
+			    BufferedReader reader = request.getReader();
+			    while ((line = reader.readLine()) != null)
+			      jb.append(line);
+			  } catch (Exception e) { /*report an error*/ }
+			 System.out.println(jb);
+			 String thing = jb.toString();
+			 JSONObject obj = new JSONObject(thing);
+			 String orderid = obj.getString("id");
+			 String price = obj.getString("price");
+			 String stock = obj.getString("stock");
+			 String qty = obj.get("qty").toString();
+			 orderRepo.save(new Order(orderid, stock, price, qty, "0"));
+			 Account account = accountRepo.findOne(orderid);
+			 Float priceInt = Float.valueOf(price);
+			 Float qtyInt = Float.valueOf(qty);
+			 Float updatedBalance = (float) ((account.balance)-(priceInt*qtyInt));
+			 account.setBalance(updatedBalance);
+			 accountRepo.save(account);
+			 
+	    }
+	    
+	    
+	    
+	    
+	    @RequestMapping("/orders/{id}")
+		public List<Order> myOrders(@PathVariable("id") String id) throws IOException{
+	    	List<Order> orders = orderRepo.findBymemberId(id);	    	
+	    	return orders;
+	    }
+	    
+	    
+	    @RequestMapping(value="/sell", method=RequestMethod.POST)
+	    public List<Order> sellStock(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	    	StringBuffer jb = new StringBuffer();
+			  String line = null;
+			  try {
+			    BufferedReader reader = request.getReader();
+			    while ((line = reader.readLine()) != null)
+			      jb.append(line);
+			  } catch (Exception e) { /*report an error*/ }
+			 System.out.println(jb);
+			 String thing = jb.toString();
+			 JSONObject obj = new JSONObject(thing);
+			 String orderid = obj.getString("orderid");
+			 String accountid = obj.getString("accountid");
+			 Float price = (float) obj.getInt("balance");
+//			 boolean profit = obj.getBoolean("profit");
+			 Account thisAccount = accountRepo.findOne(accountid);
+	    	 Float newBalance = Float.valueOf(price);
+//	    	 if(profit == true){
+//				 Float balance = (thisAccount.balance + newBalance);
+//			    thisAccount.setBalance(balance);
 //
-//				 StringBuffer jb = new StringBuffer();
-//				  String line = null;
-//				  try {
-//				    BufferedReader reader = request.getReader();
-//				    while ((line = reader.readLine()) != null)
-//				      jb.append(line);
-//				  } catch (Exception e) { /*report an error*/ }
-//				 String[] json= {jb.toString()};
-//				 System.out.println(jb);
-//				 String thing = jb.toString();
-//				 response.setContentType("application/json");
-//				 JSONObject obj = new JSONObject(thing);
-//				 String firstName = obj.getString("name");
-//				 int accountid = 12345;
-//
-//				 System.out.println(obj.getString("name"));
-//				 memberRepo.save(new Member(firstName, accountid));
-//				 for (Member person : memberRepo.findAll()) {
-//						System.out.println(person);
-//					}
-//	    	return json;
-//	      }
+//			 } else {
+//				 Float balance = (thisAccount.balance - newBalance);
+//				 thisAccount.setBalance(balance);
+//			 }
+				 
+	    	Float total = thisAccount.balance + newBalance; 
+			thisAccount.setBalance(total);
+
+	    	orderRepo.delete(orderid);
+	    	accountRepo.save(thisAccount);
+	    	
+	    	List<Order> orders = orderRepo.findBymemberId(accountid);	    	
+	    	return orders;
+	    	
+	    }
 	    
 	
 }
