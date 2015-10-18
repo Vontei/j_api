@@ -1,6 +1,7 @@
 package hello.Controllers;
 import java.io.BufferedReader;
 
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,15 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.JsonDeserializer;
-
 import hello.Models.Account;
 import hello.Models.Member;
 import hello.Repositories.*;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,12 +53,7 @@ public class AccountController {
 		 String userName = obj.getString("userName");
 		 String password = obj.getString("password");
 		 String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
-
 		 accountRepo.save(new Account(userName, hashed));
-//		 if (BCrypt.checkpw(password, hashed))
-//				System.out.println("It matches");
-//			else
-//				System.out.println("It does not match");
 		 List<Account> returnInfo = accountRepo.findByUserName(userName);
 		 System.out.println(returnInfo);
 

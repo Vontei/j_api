@@ -12,5 +12,5 @@ import hello.Models.Order;
 public interface OrderRepository extends MongoRepository<Order, String> {
 
 	List<Order> findBymemberId(@Param("memberId") String memberId);
-
+	void delete(@Param("orderId") String orderId);
 }

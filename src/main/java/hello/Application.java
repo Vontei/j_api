@@ -1,13 +1,9 @@
 package hello;
 
-
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-
-
 
 
 @SpringBootApplication
@@ -15,13 +11,11 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class Application implements CommandLineRunner {
 
 
-
-	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-	
-	
+
+
 	public void run(String... args) throws Exception {
 		System.out.println("Spring Booted");
 		System.out.println("-------------------------------");

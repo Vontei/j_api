@@ -1,39 +1,19 @@
 package hello.Controllers;
 
-import java.io.BufferedReader;
-
-
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.Future;
+	import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.http.HttpResponse;
 import org.apache.tomcat.util.net.URL;
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationConfig;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.google.api.client.json.JsonObjectParser;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.request.GetRequest;
-import com.mashape.unirest.request.HttpRequest;
-import com.mongodb.util.JSON;
-
 import hello.Models.Greeting;
 import hello.Models.Member;
 import hello.Repositories.MemberRepository;

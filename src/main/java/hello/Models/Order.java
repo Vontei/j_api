@@ -23,4 +23,7 @@ public class Order {
 		this.sellPrice = sellPrice;
 	}
 	
+	
+	
+	
 }
