@@ -49,7 +49,7 @@ public class GreetingController {
 	@JsonProperty
 	public String all() throws UnirestException, URISyntaxException, MalformedURLException {
 
-		String myUrl = "https://access.alchemyapi.com/calls/data/GetNews?apikey=9ed9b208b5abcefa432a59dcfce56fd83ed3f5e7&return=enriched.url.title,enriched.url.docSentiment&start=1444262400&end=1444950000&q.enriched.url.entities.entity=|text=IBM,type=company|&q.enriched.url.taxonomy.taxonomy_.label=technology%20and%20computing&count=25&outputMode=json";
+		String myUrl = "https://access.alchemyapi.com/calls/data/GetNews?apikey=API&return=enriched.url.title,enriched.url.docSentiment&start=1444262400&end=1444950000&q.enriched.url.entities.entity=|text=IBM,type=company|&q.enriched.url.taxonomy.taxonomy_.label=technology%20and%20computing&count=25&outputMode=json";
 		URL url = new URL(myUrl);
 		String nullFragment = null;
 		URI uri = new URI(url.getProtocol(), url.getHost(), url.getPath(), url.getQuery(), nullFragment);
